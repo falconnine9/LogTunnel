@@ -17,7 +17,6 @@ tunnels = None
 class LgtlTunnel:
     def __init__(self, **kw):
         self.file = kw["file"]
-        self.dbname = kw["dbname"]
         self.table = kw["table"]
         self.format = kw["format"]
         self.delimiters = []
@@ -64,6 +63,10 @@ class LgtlTunnel:
                 cur.execute(f"INSERT INTO {self.table} ({column_names}) VALUES ('{column_data}')")
             except psycopg2.errors.SyntaxError:
                 pass
+            except psycopg2.errors.InFailedSqlTransaction:
+                connection.rollback()
+            except Exception as e:
+                print(f"Error rasied: {type(e).__name__}")
         connection.commit()
         
     def get_log_line(self, line):
@@ -103,7 +106,7 @@ def main_loop():
             time.sleep(interval / len(tunnels))
 
 
-def connect_dbs(obj):
+def connect_db(obj):
     return psycopg2.connect(**obj)
 
 
