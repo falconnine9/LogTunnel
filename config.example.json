@@ -1,0 +1,16 @@
+{
+	"connection": {
+		"dbname": "DATABASE_NAME",
+		"user": "USER_NAME",
+		"password": "PASSWORD",
+		"host": "HOST_ADDRESS",
+		"port": 5432
+	},
+	"tunnels": [
+		{
+			"file": "EXAMPLE_FILE",
+			"table": "EXAMPLE_TABLE",
+			"format": "EXAMPLE_FORMAT"
+		}
+	]
+}
