@@ -59,6 +59,9 @@ class LgtlTunnel:
         for line in lines:
             column_data = "', '".join(self.get_log_line(line))
             column_names = ", ".join(self.columns)
+            if len(column_data) == 0 or len(column_names) == 0:
+                continue
+            
             try:
                 cur.execute(f"INSERT INTO {self.table} ({column_names}) VALUES ('{column_data}')")
             except psycopg2.errors.SyntaxError:
